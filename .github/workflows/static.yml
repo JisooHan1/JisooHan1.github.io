@@ -1,6 +1,7 @@
-# Simple workflow for deploying static content to GitHub Pages
+# The name of the workflow
 name: Deploy static content to Pages
 
+# Controls when the workflow will run
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -11,32 +12,57 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
+  # Allows the token to read repository contents
   contents: read
+  # Allows the token to write to GitHub Pages
   pages: write
+  # Allows the token to write an ID token
   id-token: write
 
 # Allow one concurrent deployment
 concurrency:
+  # Specifies the concurrency group name
   group: "pages"
+  # Cancels any in-progress workflow runs in the same concurrency group
   cancel-in-progress: true
 
+# Main component of workflow, contains a single job for deployment
 jobs:
   # Single deploy job since we're just deploying
   deploy:
+    # Variable that are available to the steps and jobs in the workflow
     environment:
+      # Sets the name of the environment variable
       name: github-pages
+      # Sets the value of the environment variable using the output from a previous step
       url: ${{ steps.deployment.outputs.page_url }}
+
+    # The destination machine, Contain a sequence of tasks (steps)
     runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checkout the repository
       - name: Checkout
+        # fetches the repository content and sets it up in the working directory
         uses: actions/checkout@v3
+
+      # Setup Pages configuration
       - name: Setup Pages
+        # configuring settings related to GitHub Pages
         uses: actions/configure-pages@v2
+
+      # Upload entire repository as an artifact, Select an action as part of step
       - name: Upload artifact
+        # creating an artifact from the specified path and uploading it
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
+          # Specifies the path of the artifact to be uploaded
           path: '.'
+
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
+        # Assigns an ID to this step for reference in the workflow
         id: deployment
+        # Specifies the action to be used in this step
         uses: actions/deploy-pages@v1
