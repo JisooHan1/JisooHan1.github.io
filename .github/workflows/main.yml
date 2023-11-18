@@ -24,12 +24,14 @@ jobs:
       # Select an action as part of step. Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Name of step, Runs a single command using the runners shell
+      # Name of step
       - name: Deploy to Github Pages 
+        # Runs a single command using the runners shell
         run: echo Hello, world!
 
-      # Name of step, Runs a set of commands using the runners shell
+      # Name of step
       - name: Run a multi-line script
+        # Runs a set of commands using the runners shell
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
